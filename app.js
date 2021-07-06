@@ -1,6 +1,7 @@
 let express = require('express');
 let app = express();
 
+let fortune = require('./lib/fortune')
 // handlebars view engine
 let handlebars = require('express3-handlebars').create({defaultLayout: 'main'});
 app.engine('handlebars', handlebars.engine);
@@ -21,18 +22,8 @@ app.get('/', (req, res) => {
 })
 
 // about page
-let fortuneCookies = [
-    "Conquer your fears or they will conquer you.",
-    "Rivers need springs.",
-    "Do not fear what you don't know.",
-    "You will have a pleasant surprise.",
-    "Whenever possible, keep it simple.",
-];
-
 app.get('/about', (req, res) => {
-    let randomFortune = fortuneCookies[Math.floor(Math.random() * fortuneCookies.length)];
-    console.log(randomFortune);
-    res.render('about', {fortune: randomFortune});
+    res.render('about', {fortune: fortune.getFortunes()});
 })
 
 // 404 page
